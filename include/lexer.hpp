@@ -4,8 +4,6 @@
 #include<string>
 #include<list>
 
-#include "tokens.hpp"
-
-std::list<Token> LexerProcess(const std::string& src, bool verbose = false);
+void LexerProcess(const std::string& src, std::list<std::string>& tokens, bool verbose = false);
 
 #endif
