@@ -3,6 +3,7 @@
 #include<sstream>
 #include<string>
 #include "lexer.hpp"
+#include "parser.hpp"
 
 std::string ReadSourceFile(const char* file_path){
     std::stringstream sstream;
@@ -28,6 +29,8 @@ int main(int argc, const char** argv) {
     }
     std::list<std::string> tokens;
     LexerProcess(source, tokens);
+
+    ParserProcess(tokens);
 
     for(std::string str : tokens){
         std::cout<<str<<std::endl;

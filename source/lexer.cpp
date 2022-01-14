@@ -17,6 +17,10 @@ const std::string _resolution = "[=,:;\\.\\$]";
 
 }
 
+
+//TODO: Verify there are no gaps between tokens in the lexer process. (For now it should be fine though)
+
+
 void LexerProcess(const std::string& _src, std::list<std::string>& tokens, bool verbose) {
     try{
     static const std::regex ignore_regex(

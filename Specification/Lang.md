@@ -19,22 +19,29 @@ u64, i64,
 f32,
 f64,
 
-# Pointer Types:
-
-Denoted with Type*
-
-Pointers have the highest precedence of all integral types but an undefined size,
-pointer operations with floating point types is undefined.
-
 # Structure Types
 
 Denoted with commas:
 
     Type1 symbol1, Type2 symbol2
 
-# Function Types
+When parsing tuple types, they should be evaluated as much as possible before function types:
 
-ArgType -> ReturnType
+example: *int, int -> int* is a function taking a tuple of two ints and returning an int, not a tuple containing an int and a function from int to int. A tuple containing an int and a function *int -> int* should be written as such: *int, (int -> int)*
+
+# Function Like Types
+
+Function Type:
+    
+    ArgType -> ReturnType
+
+Procedure Type:
+
+    <ArgType>
+
+Argument-less Procedure:
+
+    <>
 
 # Grammar of Values
 Terminals:
@@ -63,16 +70,29 @@ Non Terminals (Where T is a higher precedence type, or, if equal precedence, the
         ({T}) -> {T} //parenthesis (identity)
     Signed Integral Only
         -{T} -> {T} //negation
+    Function Only
+        {T} {T_Arg} -> {T_Return} //function call
 
 # Grammar of Expressions
 
 Allowed At Any Scope:
+    Type Declarations:
+        type AliasTypeName = SomeType;
     Declarations: (If *Symbol* is already availible in this scope it is now hidden)
         *Symbol*: Type;
     Assignments:
         TypeQualifiedSymbol = {TypeOfSymbol};
     DeclAssignments: (If *Symbol* is already availible in this scope it is now hidden)
         *Symbol*: Type = {Type};
+
+Allowed Within A Function Literal:
+    Pure Value Statements: (May be function calls or modifier calls)
+        Value;
+    Procedure Call:
+        <Proc>({Proc_Args});
+    Arguement-less Procedure Call:
+        <Proc>;
+    
 
 # Casting Rules
 
